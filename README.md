@@ -115,5 +115,9 @@ Pagination can be used to fetch Comments from GraphQL.<br>
 <b>GraphQL caching</b> can be used for query caching<br>
 <br>
 <b>Deployment:</b><br>
-GraphQL can be hosted over AWS Lambda + API Gateway<br>
+   GraphQL can be hosted over <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> + <a href="https://aws.amazon.com/api-gateway/">API Gateway</a><br>
 <a href="https://aws.amazon.com/cdk/">AWS CDK</a> or <a href="https://aws.amazon.com/serverless/sam/">AWS SAM</a> can be setup for Deployment of Lambda Code from Repository<br>
+<hr>
+<b>React JS UI Snaps</b>
+<img src="output/BlogProfile.JPG">
+<img src="output/UserSearch.JPG">
