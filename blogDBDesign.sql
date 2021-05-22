@@ -25,3 +25,12 @@ create table `comment`(
     `user_id` int not null,
     constraint COMMENT_FK_USER_ID foreign key (`user_id`) references `user`(`id`)
 );
+
+create table `friend`(
+	`id` int auto_increment primary key,
+    `user_id` int not null,
+    constraint FRIEND_FK_USER_ID foreign key (`user_id`) references `user`(`id`),
+    `friend_id` int not null,
+    constraint FRIEND_FK_FRIEND_ID foreign key (`friend_id`) references `user`(`id`),
+    constraint FRIEND_UNIQUE_PAIR_USER_FRIEND unique(user_id,friend_id)
+);

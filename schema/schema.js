@@ -1,8 +1,8 @@
 const graphql=require('graphql');
-const sequelize=require('../dbConnection/dbConnection');
 const UserModel = require('../models/user');
 const CommentModel=require('../models/comment')
-const BlogModel=require('../models/blog')
+const BlogModel=require('../models/blog');
+const FriendModel = require('../models/friend');
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -26,6 +26,16 @@ const UserType=new GraphQLObjectType({
             type:new GraphQLList(CommentType),
             resolve(parent){
                 return CommentModel.findAll({
+                    where:{
+                        user_id:parent.id
+                    }
+                })
+            }
+        },
+        friends:{
+            type:new GraphQLList(FriendType),
+            resolve(parent){
+                return FriendModel.findAll({
                     where:{
                         user_id:parent.id
                     }
@@ -126,6 +136,33 @@ const CommentInputType=new GraphQLInputObjectType({
         blog_id:{type:GraphQLInt}
     })
 });
+const FriendAtLevelInputType=new GraphQLInputObjectType({
+    name:'FriendAtLevelInput',
+    fields:()=>({
+        user_id:{type:new GraphQLNonNull(GraphQLInt)},
+        level:{type:new GraphQLNonNull(GraphQLInt)}
+    })
+})
+const FriendType=new GraphQLObjectType({
+    name:'Friend',
+    fields:()=>({
+        id:{type:GraphQLID},
+        friend_id:{type:GraphQLInt},
+        friend:{
+            type:BlogType,
+            resolve(parent){
+                return UserModel.findByPk(parent.friend_id)
+            }
+        },
+        user_id:{type:GraphQLInt},
+        user:{
+            type:UserType,
+            resolve(parent){
+                return UserModel.findByPk(parent.user_id)
+            }
+        }
+    })
+})
 const RootQuery=new GraphQLObjectType({
     name:'RootQueryType',
     fields:{
@@ -172,6 +209,54 @@ const RootQuery=new GraphQLObjectType({
             resolve(){
                 return BlogModel.count()
             }
+        },
+        getFriends:{
+            type:new GraphQLList(UserType),
+            args:{
+                input:{type:new GraphQLNonNull(FriendAtLevelInputType)},
+            },
+            async resolve(_,args){
+                const {user_id,level}=args.input
+                if(level<=0)throw new Error('Level must be greater than 0')
+                visitedUsers=new Set()
+                let userQueue=[]
+                let currentLevel=0
+                userQueue.push(user_id)
+                visitedUsers.add(user_id)
+                while(currentLevel<level && userQueue.length>0){
+                    console.log("userQueue",userQueue)
+                    let secondQueue=[]
+                    for(var currentUser of userQueue){
+                        console.log("currentUser",currentUser)
+                        {
+                            await FriendModel.findAll({
+                                where:{
+                                    user_id:currentUser
+                                }
+                            })
+                            .then(friends=>{
+                                console.log(JSON.stringify(friends))
+                                friends.forEach(friend=>{
+                                    if(!visitedUsers.has(friend.friend_id)){
+                                        visitedUsers.add(friend.friend_id)
+                                        console.log("added",friend.friend_id)
+                                        secondQueue.push(friend.friend_id)
+                                    }
+                                })
+                            })
+                        }
+                    }
+                    console.log("Values",currentLevel,secondQueue)
+                    currentLevel+=1
+                    userQueue=secondQueue
+                }
+                if(currentLevel<level)return null
+                return UserModel.findAll({
+                    where:{
+                        id:userQueue
+                    }
+                })
+            }
         }
     }
 })
@@ -216,14 +301,13 @@ const Mutation=new GraphQLObjectType({
                 comment:{type:new GraphQLNonNull(CommentInputType)}
             },
             resolve:async (_,args)=>{
-                return await CommentModel.create(args.comment)
-                .then((comment)=>{
-                    return comment;
-                }).catch(_=>{
-                    const {user_id,blog_id,message}=args.user
+                const {user_id,blog_id,message}=args.comment
+                const newComment= await CommentModel.create(args.comment)
+                .then(_,_=>{
                     throw new Error(`Comment with User ID: ${user_id} Blog ID: ${blog_id}
-                     and Message: ${message} could not be posted`)
-                });
+                        and Message: ${message} could not be posted`)
+                })
+                return newComment
             }
         }
     }
