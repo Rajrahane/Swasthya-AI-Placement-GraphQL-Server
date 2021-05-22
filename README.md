@@ -17,6 +17,9 @@ Create 3 tables: User, Blog and Comment<br>
 User Table: id,first_name,last_name,mobile_number,email_address<br>
 Blog Table: id,name<br>
 Comment Table: id,message,user_id,blog_id<br>
+Friends Table: id,user_id,friend_id<br>
+Friends table adds a given friend to the user's friendList.<br>
+Considering friends is undirected connection,two entries would be made- for a pair of friends A,B as (A,B) and (B,A).
 
 React UI:<br>
 /users Endpoint: User can Register, Search, View Profile<br>
@@ -29,7 +32,33 @@ Create a React Frontend for Forms, Search, Profile.<br>
 ----<br>
 Solution for nth Level Friend List:<br>
 Create a Friends graph and make a BFS recursive call until nth level.<br>
-
+<pre>
+Consider input as (user_id:int,givenLevel:int) returns list(users)
+   Initialize an empty Set of VisitedUsers
+   Initialize an empty queue.Push (user_id) into it
+   Initialize currentLevel=0
+   while(q is not empty and currentLevel lessthan givenLevel){
+      init new empty queue q2
+      while(q not empty){
+        pop each user.
+        if(user not visited){
+            mark as visited in VisitedUsers
+            fetch all friends ids from Friends table in Database
+            foreach(friend){
+              if(friend not visited){
+                push friend to queue q2
+              }
+            }
+         }
+      }
+      currentLevel++
+      push all elements in q2 to q, i.e. q=q2
+   }
+   if(currentLevel less than givenLevel){ //no nth level depth possible, too few levels
+      return empty list
+   }
+   return to_list(q)
+</pre>
 Improvements:<br>
 DFS can be used instead of BFS if some(say 10) and not all users are to be fetched.<br>
 Graph DB - Neo4j can be used instead of MySQL, since a friends graph is formed<br>
