@@ -57,6 +57,31 @@ const BlogType=new GraphQLObjectType({
                 return CommentModel.findAll({
                     where:{
                         blog_id:parent.id
+                    },
+                    order:[
+                        ['id','DESC']
+                    ]
+                })
+            }
+        },
+        totalComments:{
+            type:GraphQLInt,
+            resolve(parent){
+                return CommentModel.count({
+                    where:{
+                        blog_id:parent.id
+                    }
+                })
+            }
+        },
+        usersCount:{
+            type:GraphQLInt,
+            resolve(parent){
+                return CommentModel.count({
+                    distinct:true,
+                    col:'user_id',
+                    where:{
+                        blog_id:parent.id
                     }
                 })
             }
@@ -127,6 +152,25 @@ const RootQuery=new GraphQLObjectType({
             type:new GraphQLList(BlogType),
             resolve(){
                 return BlogModel.findAll()
+            }
+        },
+        blog:{
+            type:BlogType,
+            args:{id:{type:GraphQLID}},
+            resolve(_,args){
+                return BlogModel.findByPk(args.id);
+            }
+        },
+        totalUsers:{
+            type:GraphQLInt,
+            resolve(){
+                return UserModel.count()
+            }
+        },
+        totalBlogs:{
+            type:GraphQLInt,
+            resolve(){
+                return BlogModel.count()
             }
         }
     }
