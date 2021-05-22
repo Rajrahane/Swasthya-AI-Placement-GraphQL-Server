@@ -149,7 +149,7 @@ const FriendType=new GraphQLObjectType({
         id:{type:GraphQLID},
         friend_id:{type:GraphQLInt},
         friend:{
-            type:BlogType,
+            type:UserType,
             resolve(parent){
                 return UserModel.findByPk(parent.friend_id)
             }
