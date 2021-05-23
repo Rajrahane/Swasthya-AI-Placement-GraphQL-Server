@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+    db:
+        container_name: db
+        image: mysql
+        environment: 
+            MYSQL_ROOT_PASSWORD: vis$
+        volumes: 
+            - graphql-db:/var/lib/mysql
+        ports: 
+            - 3306:3306
+volumes: 
+    graphql-db:
+        name: graphql-db
