@@ -3,12 +3,12 @@ GraphQL server for Swasthya AI Placement Assignment
 
 Visit the <a href='https://github.com/Rajrahane/Swasthya-AI-Placement-React-Server'>React Client Repository</a>
 
-Run the MYSQL script dump_2329_22052021.sql on MySQL Workbench<br>
+Run the MYSQL script `dump_2329_22052021.sql` on MySQL Workbench<br>
 Steps to install and run GraphQL and React Servers:<br>
-1. clone the repository (git clone repo.git)
-2. run npm install
+1. clone the repository (`git clone https://github.com/Rajrahane/Swasthya-AI-Placement-GraphQL-Server.git`)
+2. run `npm install`
 3. change the username,password for GraphQL dbConnection/dbConnection.js
-4. run npm start
+4. run `npm start`
 5. view the GraphQL server on http://localhost:4000/graphql
 6. view the React Server on http://localhost:3000/
 
