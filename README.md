@@ -73,6 +73,7 @@ Consider input as (user_id:int,givenLevel:int) returns list(users)
 2. 2 blogs are created<br>
 3. 1st blog has 2 comments added<br>
 4. To mock friend relations, 6 relations are created {1,2,3}, {1,4}, {4,6}, {4,5}<br>
+<img src="output/UsersGraph.png">
 <img src="output/BasicUserQuery.JPG">
 <hr>
 <b>Sample GraphQL Query for getFriends at any level:</b>
