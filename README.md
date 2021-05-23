@@ -1,6 +1,9 @@
 # Swasthya-AI-Placement-GraphQL-Server
-GraphQL server for Swasthya AI Placement Assignment
-
+GraphQL server for Swasthya AI Placement Assignment<br>
+<h3>Running Servers on EC2:</h3>
+http://18.204.231.214:3000/ <br>
+http://18.204.231.214:4000/graphql<br>
+<br>
 Visit the <a href='https://github.com/Rajrahane/Swasthya-AI-Placement-React-Server'>React Client Repository</a>
 
 Run the MYSQL script `dump_2329_22052021.sql` on MySQL Workbench<br>
@@ -138,3 +141,22 @@ Features of GraphQL Repository
 <b>React JS UI Snaps</b>
 <img src="output/BlogProfile.JPG">
 <img src="output/UserSearch.JPG">
+
+  EC2 Deployment
+<ul>
+  <li>Launch EC2 using Amazon AWS console.Open ports 4000(GraphQL),3000(React),22(SSH)</li>
+  <li>SSH into it. install <a href="https://git-scm.com/">git</a> `sudo yum install git -y`</li>
+  <li><a href="https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html">install node using nvm</a></li>
+  <li>install <a href="https://pm2.keymetrics.io/">pm2</a> Daemon Process Manager. `npm install pm2 -g`</li>
+  <li>git pull both repositories(React and GraphQL)</li>
+  <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html">Install Docker on EC2</a></li>
+  <li>
+    <a href="https://docs.docker.com/compose/install/">Install docker-compose(linux)</a><br>
+    `sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`<br>
+    `sudo chmod +x /usr/local/bin/docker-compose`<br>
+    `docker-compose --version`
+  </li>
+  <li><b>Deploy DB using Docker:</b>In /deployment folder: `cd deployment`, `docker-compose up -d` This launches a mysql db and connects a persistent docker volume to it</li>
+  <li><b>Deploy GraphQL using pm2</b>:in graphql repository: `pm2 start --name swasthya-ai-graphql-server npm -- start`</li>
+  <li><b>Deploy React using pm2:</b>in react repository:change graphql endpoint in src/index.js to http://18.204.231.214:4000/graphql then `pm2 start --name swasthya-ai-react-server npm --start`</li>
+  </ul>
