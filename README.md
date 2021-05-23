@@ -16,11 +16,13 @@ Steps to install and run GraphQL and React Servers:<br>
 <b>DB Schema:</b>
 <img src="output/dbDiagramJPG.JPG">
 Create 4 tables: User, Blog, Comment, Friend<br>
-User Table: id,first_name,last_name,mobile_number,email_address<br>
-Blog Table: id,name<br>
-Comment Table: id,message,user_id,blog_id<br>
-Friend Table: id,user_id,friend_id<br>
-Friend table adds a given friend to the user's friendList.<br>
+<ul>
+<li>User Table: id,first_name,last_name,mobile_number,email_address</li>
+<li>Blog Table: id,name</li>
+<li>Comment Table: id,message,user_id,blog_id</li>
+<li>Friend Table: id,user_id,friend_id<br>
+Friend table adds a given friend to the user's friendList.</li>
+  </ul>
 Assumption: Friends is undirected connection,two entries would be made- for a pair of friends A,B as (A,B) and (B,A).
 <br><br>
 <b>React UI:</b><br>
@@ -109,14 +111,15 @@ Explanation: User 5 has friends upto level 3 only
  <img src="output/Level0.JPG">
 <hr>
 <b>Improvements:</b><br>
-   <b>DFS</b> can be used instead of BFS if some(say 10) and not all users are to be fetched.<br>
-   <b><a href="https://neo4j.com/developer/graph-database/">Graph DB - Neo4j</a></b> can be used instead of MySQL, since a friends graph is formed<br>
-Pagination can be used to fetch Comments from GraphQL.<br>
-<b>GraphQL caching</b> can be used for query caching<br>
-<br>
+   <ul>
+   <li><b>DFS</b> can be used instead of BFS if some(say 10) and not all users are to be fetched.</li>
+   <li><b><a href="https://neo4j.com/developer/graph-database/">Graph DB - Neo4j</a></b> can be used instead of MySQL, since a friends graph is formed</li>
+<li>Pagination can be used to fetch Comments from GraphQL.</li>
+<li><b>GraphQL caching</b> can be used for query caching</li>
+</ul>
 <b>Deployment:</b><br>
-   GraphQL can be hosted over <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> + <a href="https://aws.amazon.com/api-gateway/">API Gateway</a><br>
-<a href="https://aws.amazon.com/cdk/">AWS CDK</a> or <a href="https://aws.amazon.com/serverless/sam/">AWS SAM</a> can be setup for Deployment of Lambda Code from Repository<br>
+   <li>GraphQL can be hosted over <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> + <a href="https://aws.amazon.com/api-gateway/">API Gateway</a></li>
+<li><a href="https://aws.amazon.com/cdk/">AWS CDK</a> or <a href="https://aws.amazon.com/serverless/sam/">AWS SAM</a> can be setup for Deployment of Lambda Code from Repository</li>
 <hr>
 <b>React JS UI Snaps</b>
 <img src="output/BlogProfile.JPG">
