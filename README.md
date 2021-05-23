@@ -158,5 +158,5 @@ Features of GraphQL Repository
   </li>
   <li><b>Deploy DB using Docker:</b>In /deployment folder: `cd deployment`, `docker-compose up -d` This launches a mysql db and connects a persistent docker volume to it</li>
   <li><b>Deploy GraphQL using pm2</b>:in graphql repository: `pm2 start --name swasthya-ai-graphql-server npm -- start`</li>
-  <li><b>Deploy React using pm2:</b>in react repository:change graphql endpoint in src/index.js to http://18.206.209.243:4000/graphql then `pm2 start --name swasthya-ai-react-server npm --start`</li>
+  <li><b>Deploy React using pm2:</b>in react repository:change graphql endpoint in src/index.js to http://18.206.209.243:4000/graphql then `pm2 start --name swasthya-ai-react-server npm -- start`</li>
   </ul>
