@@ -111,6 +111,19 @@ Explanation: User 5 has friends upto level 3 only
  <img src="output/LevelTooHigh.JPG">
  <img src="output/Level0.JPG">
 <hr>
+Features of GraphQL Repository
+  <ul>
+    <li>Uses <a href="https://expressjs.com/">Express</a> NPM Package for Server Setup</li>
+    <li>Uses <a href="https://graphql.org/">GraphQL</a> to create Schema and Query, Mutation operations</li>
+    <li>Uses <a href="https://sequelize.org/">Sequelize</a> a Promise based Node.js ORM</li>
+  </ul>
+ Features of ReactJS Repository
+    <ul>
+      <li>Uses <a href="https://www.apollographql.com/docs/react/">ApolloClient</a> to connect to GraphQL Server</li>
+      <li>Uses <a href="https://reactrouter.com/web/guides/quick-start">React Router</a> for creating Routes Hierarchy</li>
+      <li>Uses <a href="https://react-bootstrap.github.io/">React Bootstrap</a> for Bootstrapping </li>
+    </ul>
+
 <b>Improvements:</b><br>
    <ul>
    <li><b>DFS</b> can be used instead of BFS if some(say 10) and not all users are to be fetched.</li>
