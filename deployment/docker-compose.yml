@@ -4,11 +4,8 @@ services:
         container_name: db
         image: mysql
         environment: 
-            MYSQL_ROOT_PASSWORD: vis$
+            MYSQL_ROOT_PASSWORD: "vis$$"
         volumes: 
-            - graphql-db:/var/lib/mysql
+            - /home/ec2-user/mysql-db:/var/lib/mysql
         ports: 
             - 3306:3306
-volumes: 
-    graphql-db:
-        name: graphql-db

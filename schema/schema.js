@@ -302,6 +302,44 @@ const Mutation=new GraphQLObjectType({
             },
             resolve:async (_,args)=>{
                 const {user_id,blog_id,message}=args.comment
+                const anyComment=await CommentModel.findOne({
+                    where:{
+                        blog_id:blog_id,
+                        user_id:user_id
+                    }
+                })
+                console.log("anyComment",JSON.stringify(anyComment))
+                if(anyComment==null){
+                    await CommentModel.findAll({
+                        where:{
+                            blog_id:blog_id
+                        }
+                    })
+                    .then(async(comments)=>{
+                        for(let comment of comments){
+                            const userFriendRelation=await FriendModel.findOne({
+                                where:{
+                                    user_id:user_id,
+                                    friend_id:comment.user_id
+                                }
+                            })
+                            if(userFriendRelation==null){
+                                await FriendModel.create({
+                                    user_id:user_id,
+                                    friend_id:comment.user_id
+                                }).then(relation=>{
+                                    console.log(JSON.stringify(relation))
+                                })
+                                await FriendModel.create({
+                                    user_id:comment.user_id,
+                                    friend_id:user_id
+                                }).then(relation=>{
+                                    console.log(JSON.stringify(relation))
+                                })
+                            }
+                        }
+                    })
+                }
                 const newComment= await CommentModel.create(args.comment)
                 .then(_,_=>{
                     throw new Error(`Comment with User ID: ${user_id} Blog ID: ${blog_id}
